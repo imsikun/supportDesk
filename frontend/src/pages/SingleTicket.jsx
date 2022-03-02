@@ -39,8 +39,23 @@ const SingleTicket = () => {
     <>
       <BackButton url={'/tickets'} />
 
-      <div>
-        <h1>Ticketsection</h1>
+      <div className='ticket-page'>
+        <header className='ticket-header'>
+          <h2>
+            Ticket ID: {ticket._id}
+            <span className={`status statu-${ticket.status}`}>
+              {ticket.status}
+            </span>
+          </h2>
+          <h3>
+            Date Submitted: {new Date(ticket.createdAt).toLocaleString('en-US')}
+          </h3>
+          <hr />
+          <div className='ticket-desc'>
+            <h3>Description of issue</h3>
+            <p>{ticket.description}</p>
+          </div>
+        </header>
       </div>
     </>
   );
