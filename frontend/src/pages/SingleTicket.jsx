@@ -6,12 +6,11 @@ import { getTicket, reset } from '../features/tickets/ticketSlice';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 
-function SingleTicket() {
+const SingleTicket = () => {
   const { ticket, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.tickets
   );
 
-  const params = useParams();
   const dispatch = useDispatch();
 
   const { ticketId } = useParams();
@@ -45,6 +44,6 @@ function SingleTicket() {
       </div>
     </>
   );
-}
+};
 
 export default SingleTicket;
