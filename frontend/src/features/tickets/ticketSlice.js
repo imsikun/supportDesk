@@ -72,6 +72,26 @@ export const getTicket = createAsyncThunk(
   }
 );
 
+//close ticket
+export const closeTicket = createAsyncThunk(
+  'ticket/close',
+  async (ticketId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await ticketService.closeTicket(ticketId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const ticketSlice = createSlice({
   name: 'ticket',
   initialState,
@@ -114,6 +134,24 @@ export const ticketSlice = createSlice({
         state.ticket = action.payload;
       })
       .addCase(getTicket.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(closeTicket.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(closeTicket.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        // what we are doing here, we are first checking for the id, if the id matches then we will put the status to close and if not then we will just share the ticket
+        state.tickets.map((ticket) =>
+          ticket._id === action.payload._id
+            ? (ticket.status = 'closed')
+            : ticket
+        );
+      })
+      .addCase(closeTicket.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
