@@ -3,11 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTicket, closeTicket } from '../features/tickets/ticketSlice';
-import {
-  getNotes,
-  createNote,
-  reset as noteReset,
-} from '../features/notes/noteSlice';
+import { getNotes, createNote } from '../features/notes/noteSlice';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import NoteItem from '../components/NoteItem';
@@ -34,7 +30,7 @@ const SingleTicket = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [noteText, setNoteText] = useState('');
 
-  const { ticket, isSuccess, isLoading, isError, message } = useSelector(
+  const { ticket, isLoading, isError, message } = useSelector(
     (state) => state.tickets
   );
 
