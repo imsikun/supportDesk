@@ -85,7 +85,6 @@ const SingleTicket = () => {
   if (isError) {
     return (
       <>
-        <BackButton url={'/tickets'} />
         <h3>Something went wrong</h3>
       </>
     );
