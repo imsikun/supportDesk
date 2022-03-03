@@ -17,10 +17,6 @@ app.use(express.json());
 //to get data from urlencoded form
 app.use(express.urlencoded({ extended: false }));
 
-// routes
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/tickets', require('./routes/ticketRoutes'));
-
 //heroku setup
 // serve frontend
 if (process.env.NODE_ENV === 'production') {
@@ -36,6 +32,10 @@ if (process.env.NODE_ENV === 'production') {
     res.status(200).json({ message: 'Welcome to the Support Desk API' });
   });
 }
+
+// routes
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/tickets', require('./routes/ticketRoutes'));
 
 //custom error handler
 app.use(errorHandler);
